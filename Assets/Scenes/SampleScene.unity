@@ -609,7 +609,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -1.7899044, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 940301991}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655520878
@@ -932,7 +933,7 @@ GameObject:
   - component: {fileID: 940301988}
   - component: {fileID: 940301987}
   - component: {fileID: 940301986}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2808,12 +2809,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940301985}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.49515963, y: -1.7899044, z: -7.07}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.49515963, y: 0, z: -7.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 575086615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -3028,12 +3029,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe1c6100ceb1aa4988ea104bcaa8606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 655520884}
-  _minTargetDistance: 2
-  _layerMask:
+  player: {fileID: 655520884}
+  speed: 5
+  stoppingDistance: 2
+  gravity: 9.81
+  groundCheckDistance: 1.1
+  groundMask:
     serializedVersion: 2
     m_Bits: 8
-  _speed: 3
 --- !u!54 &1026741532
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3058,9 +3061,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!43 &1427122900
 Mesh:
   m_ObjectHideFlags: 0
@@ -3235,4 +3238,3 @@ SceneRoots:
   - {fileID: 655520884}
   - {fileID: 1026741530}
   - {fileID: 575086615}
-  - {fileID: 940301991}
