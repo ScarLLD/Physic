@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
@@ -7,6 +8,10 @@ public class Player : MonoBehaviour
 
     private CharacterController _characterController;
 
+    private Vector3 _moveDirection;
+    private float _horizontalInput;
+    private float _verticalInput;
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -14,19 +19,20 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        _horizontalInput = Input.GetAxis("Horizontal");
+        _verticalInput = Input.GetAxis("Vertical");
+
         if (_characterController != null)
         {
-            Vector3 playerSpeed = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            playerSpeed *= Time.deltaTime * _speed;
+            _moveDirection = new(_horizontalInput, 0, _verticalInput);
+            _moveDirection *= _speed * Time.deltaTime;
 
-            if (_characterController.isGrounded)
+            if (_characterController.isGrounded == false)
             {
-                _characterController.Move(playerSpeed + Vector3.down);
+                _moveDirection += Time.deltaTime * Physics.gravity;
             }
-            else
-            {
-                _characterController.Move(playerSpeed + Physics.gravity * Time.deltaTime);
-            }
+
+            _characterController.Move(_moveDirection);
         }
     }
 }

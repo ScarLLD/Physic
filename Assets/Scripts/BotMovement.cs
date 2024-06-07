@@ -1,64 +1,54 @@
-using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BotMovement : MonoBehaviour
 {
-    public Transform player;
-    public float speed = 3.0f;
-    public float stoppingDistance = 2.0f;
-    public float gravity = 9.81f;
-    public float groundCheckDistance = 1.1f;
-    public LayerMask groundMask;
+    [SerializeField] private Transform _player;
+    [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _stopDistance;
+    [SerializeField] private float _groundDistance;
+    [SerializeField] private float _rayDuration;
 
-    private Rigidbody rb;
-    private bool isGrounded;
+    private Rigidbody _rigidbody;
+    private float _targetDistance;
+    private bool _isGrounded;
+    private Vector3 _moveDirection;
+    private Vector3 _direction;
 
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; // Отключаем встроенную гравитацию
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        Vector3 moveDirection = Vector3.zero;
+        _moveDirection = Vector3.zero;
 
-        // Расстояние до игрока
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        _targetDistance = Vector3.Distance(transform.position, _player.position);
 
-        // Проверка, на земле ли бот
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
+        _isGrounded = Physics.Raycast(transform.position, Vector3.down, _groundDistance, _groundMask);
 
-        // Если бот далеко от игрока, преследовать его
-        if (distanceToPlayer > stoppingDistance)
+        if (_targetDistance > _stopDistance)
         {
-            Vector3 direction = (player.position - transform.position).normalized;
+            _direction = (_player.position - transform.position).normalized;
 
-            // Проверка поверхности перед ботом для проекции движения на наклонную поверхность
-            if (Physics.Raycast(transform.position + Vector3.up * 0.5f, direction, out RaycastHit hit, 1.0f, groundMask))
-            {
-                Vector3 surfaceNormal = hit.normal;
-                moveDirection = Vector3.ProjectOnPlane(direction, surfaceNormal).normalized * speed;
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _rayDuration, _groundMask))
+            {                
+                _moveDirection = Vector3.ProjectOnPlane(_direction, hit.normal).normalized * _speed;
             }
             else
             {
-                moveDirection = direction * speed;
+                _moveDirection = _direction * _speed;
             }
         }
 
-        // Применение гравитации
-        if (isGrounded)
+        if (_isGrounded == false)
         {
-            moveDirection.y = 0; // На земле не падаем
+            _moveDirection.y = _rigidbody.velocity.y + Physics.gravity.y * Time.deltaTime;
         }
-        else
-        {
-            moveDirection.y = rb.velocity.y - Physics.gravity * Time.deltaTime; // Применяем гравитацию
-        }
-
-        // Перемещение бота
-        rb.velocity = moveDirection;
+        
+        _rigidbody.velocity = _moveDirection;
     }
 }

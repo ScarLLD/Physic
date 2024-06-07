@@ -605,8 +605,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575086610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.7899044, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -668,7 +668,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 102.37
+  m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -755,7 +755,7 @@ Transform:
   m_GameObject: {fileID: 655520878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.51, y: 1.2, z: -2.8996806}
+  m_LocalPosition: {x: 4.51, y: 0, z: -2.8996806}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3011,7 +3011,7 @@ Transform:
   m_GameObject: {fileID: 1026741526}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.42, y: 3.8200958, z: 0}
+  m_LocalPosition: {x: 4.46, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3029,14 +3029,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe1c6100ceb1aa4988ea104bcaa8606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 655520884}
-  speed: 5
-  stoppingDistance: 2
-  gravity: 9.81
-  groundCheckDistance: 1.1
-  groundMask:
+  _player: {fileID: 655520884}
+  _groundMask:
     serializedVersion: 2
     m_Bits: 8
+  _speed: 5
+  _stopDistance: 2
+  _groundDistance: 1.14
+  _rayDuration: 1.5
 --- !u!54 &1026741532
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3059,11 +3059,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!43 &1427122900
 Mesh:
   m_ObjectHideFlags: 0
