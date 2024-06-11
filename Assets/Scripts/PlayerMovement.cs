@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
     private CharacterController _characterController;
-
     private Vector3 _moveDirection;
     private float _horizontalInput;
     private float _verticalInput;
@@ -22,17 +20,18 @@ public class Player : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
 
-        if (_characterController != null)
+        if (_characterController.isGrounded)
         {
             _moveDirection = new(_horizontalInput, 0, _verticalInput);
-            _moveDirection *= _speed * Time.deltaTime;
-
-            if (_characterController.isGrounded == false)
-            {
-                _moveDirection += Time.deltaTime * Physics.gravity;
-            }
-
-            _characterController.Move(_moveDirection);
+            _moveDirection *= _speed;
         }
+        else
+        {
+
+            _moveDirection.y += Physics.gravity.y * Time.deltaTime;
+        }
+
+
+        _characterController.Move(_moveDirection * Time.deltaTime);
     }
 }

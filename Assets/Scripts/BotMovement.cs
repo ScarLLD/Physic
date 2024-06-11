@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BotMovement : MonoBehaviour
@@ -46,7 +45,7 @@ public class BotMovement : MonoBehaviour
 
         if (_isGrounded == false)
         {
-            _moveDirection.y = _rigidbody.velocity.y + Physics.gravity.y * Time.deltaTime;
+            _moveDirection = _rigidbody.velocity + Physics.gravity * Time.deltaTime;
         }
         
         _rigidbody.velocity = _moveDirection;
