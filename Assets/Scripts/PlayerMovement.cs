@@ -20,18 +20,17 @@ public class PlayerMovement : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
 
-        if (_characterController.isGrounded)
+        if (_characterController != null)
         {
             _moveDirection = new(_horizontalInput, 0, _verticalInput);
-            _moveDirection *= _speed;
+            _moveDirection *= _speed * Time.deltaTime;
+
+            if (_characterController.isGrounded == false)
+            {
+                _moveDirection += Time.deltaTime * Physics.gravity;
+            }
+
+            _characterController.Move(_moveDirection);
         }
-        else
-        {
-
-            _moveDirection.y += Physics.gravity.y * Time.deltaTime;
-        }
-
-
-        _characterController.Move(_moveDirection * Time.deltaTime);
     }
 }
