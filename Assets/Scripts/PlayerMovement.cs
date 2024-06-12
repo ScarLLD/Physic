@@ -21,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
 
-        if (_characterController.isGrounded)
+        if (_characterController != null)
         {
+
             _direction.y = 0;
             _moveDirection = new(_horizontalInput, -1f, _verticalInput);
             _moveDirection *= _speed;
@@ -32,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
             _direction.y += Physics.gravity.y * Time.deltaTime;
             _moveDirection.y = _direction.y;
         }
-
 
         _characterController.Move(_moveDirection * Time.deltaTime);
     }
