@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController _characterController;
     private Vector3 _moveDirection;
+    private Vector3 _direction;
     private float _horizontalInput;
     private float _verticalInput;
 
@@ -22,13 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (_characterController.isGrounded)
         {
-            _moveDirection = new(_horizontalInput, 0, _verticalInput);
+            _direction.y = 0;
+            _moveDirection = new(_horizontalInput, -1f, _verticalInput);
             _moveDirection *= _speed;
         }
         else
         {
-
-            _moveDirection.y += Physics.gravity.y * Time.deltaTime;
+            _direction.y += Physics.gravity.y * Time.deltaTime;
+            _moveDirection.y = _direction.y;
         }
 
 
